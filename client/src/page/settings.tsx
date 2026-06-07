@@ -422,6 +422,7 @@ export function Settings() {
                       description={t("settings.background.desc")}
                     />
                   }
+                  action={null}
                 />
                 <SettingsCardBody>
                   <ItemBackgroundType
