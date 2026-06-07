@@ -75,7 +75,7 @@ export function Settings() {
     return {
       type: normalizeBackgroundType(nextDraft.clientConfig["background.type"] as string | undefined | null),
       image: (nextDraft.clientConfig["background.image"] as string) || "",
-      opacity: normalizeImageOpacity(nextDraft.clientConfig["background.imageOpacity"]),
+      opacity: normalizeImageOpacity(nextDraft.clientConfig["background.imageOpacity"] as string | number | null | undefined),
       gradient: (nextDraft.clientConfig["background.gradient"] as string) || "",
     };
   }
@@ -116,7 +116,7 @@ export function Settings() {
   const feedCardVariantValue = normalizeFeedCardVariant(String(clientConfig.get("feed.card_variant") ?? "default"));
   const bgTypeValue = normalizeBackgroundType(String(clientConfig.get("background.type") ?? "none"));
   const bgImageValue = String(clientConfig.get("background.image") ?? "");
-  const bgImageOpacityValue = normalizeImageOpacity(clientConfig.get("background.imageOpacity"));
+  const bgImageOpacityValue = normalizeImageOpacity(clientConfig.get("background.imageOpacity") as string | number | null | undefined);
   const bgGradientValue = String(clientConfig.get("background.gradient") ?? "");
   const previewSiteName = String(clientConfig.get("site.name") ?? clientConfig.default("site.name") ?? "Rin");
   const previewSiteAvatar = String(clientConfig.get("site.avatar") ?? clientConfig.default("site.avatar") ?? "");

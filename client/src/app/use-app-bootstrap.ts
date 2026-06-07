@@ -30,7 +30,7 @@ export function useAppBootstrap() {
       applyThemeColor(typeof nextConfig["theme.color"] === "string" ? nextConfig["theme.color"] : undefined);
       const bgType = normalizeBackgroundType(nextConfig["background.type"] as string | undefined | null);
       const bgImage = (nextConfig["background.image"] as string) || "";
-      const bgOpacity = normalizeImageOpacity(nextConfig["background.imageOpacity"]);
+      const bgOpacity = normalizeImageOpacity(nextConfig["background.imageOpacity"] as string | number | null | undefined);
       const bgGradient = (nextConfig["background.gradient"] as string) || "";
       applyBackground(bgType, bgImage, bgOpacity, bgGradient);
     };
@@ -59,7 +59,7 @@ export function useAppBootstrap() {
       applyThemeColor(typeof configObject["theme.color"] === "string" ? configObject["theme.color"] : undefined);
       const bgType = normalizeBackgroundType(configObject["background.type"] as string | undefined | null);
       const bgImage = (configObject["background.image"] as string) || "";
-      const bgOpacity = normalizeImageOpacity(configObject["background.imageOpacity"]);
+      const bgOpacity = normalizeImageOpacity(configObject["background.imageOpacity"] as string | number | null | undefined);
       const bgGradient = (configObject["background.gradient"] as string) || "";
       applyBackground(bgType, bgImage, bgOpacity, bgGradient);
     }

@@ -12,7 +12,7 @@ import {
   SettingsCardRow,
   SettingsSectionTitle,
 } from "@rin/ui";
-import { applyBackground, normalizeBackgroundType, GRADIENT_PRESETS, type GradientPresetKey } from "../utils/background";
+import { GRADIENT_PRESETS, type GradientPresetKey } from "../utils/background";
 
 export function ItemTitle({ title }: { title: string }) {
   return <SettingsSectionTitle title={title} />;
@@ -282,28 +282,28 @@ export function ItemBackgroundType({
       <SettingsCard>
         <SettingsCardRow
           header={<SettingsCardHeader title={title} description={description} />}
+          action={
+            <div className="flex gap-2">
+              {BACKGROUND_TYPE_OPTIONS.map((type) => {
+                const selected = value === type;
+                return (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => onChange(type)}
+                    className={`rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
+                      selected
+                        ? "border-theme bg-theme/5 text-theme shadow-sm"
+                        : "border-black/10 bg-white text-neutral-600 hover:border-black/20 dark:border-white/10 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:border-white/20"
+                    }`}
+                  >
+                    {type === "none" ? "无背景" : type === "image" ? "背景图片" : "渐变色"}
+                  </button>
+                );
+              })}
+            </div>
+          }
         />
-        <SettingsCardBody>
-          <div className="flex gap-2">
-            {BACKGROUND_TYPE_OPTIONS.map((type) => {
-              const selected = value === type;
-              return (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => onChange(type)}
-                  className={`rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
-                    selected
-                      ? "border-theme bg-theme/5 text-theme shadow-sm"
-                      : "border-black/10 bg-white text-neutral-600 hover:border-black/20 dark:border-white/10 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:border-white/20"
-                  }`}
-                >
-                  {type === "none" ? "无背景" : type === "image" ? "背景图片" : "渐变色"}
-                </button>
-              );
-            })}
-          </div>
-        </SettingsCardBody>
       </SettingsCard>
     </div>
   );
