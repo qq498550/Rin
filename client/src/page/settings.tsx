@@ -19,8 +19,9 @@ import { FeedCardPreview } from "../components/feed-card-preview";
 import { FEED_LAYOUT_OPTIONS, normalizeFeedLayout } from "../components/feed-layout-options";
 import { useSiteConfig } from "../hooks/useSiteConfig";
 import { applyThemeColor, normalizeThemeColor } from "../utils/theme-color";
+import { normalizeBackgroundType, normalizeImageOpacity, applyBackground } from "../utils/background";
 import { AISummarySettings } from "./settings-ai";
-import { ItemButton, ItemImageInput, ItemInput, ItemSwitch, ItemTitle, ItemWithUpload } from "./settings-items";
+import { ItemButton, ItemImageInput, ItemInput, ItemSwitch, ItemTitle, ItemWithUpload, ItemBackgroundType, ItemBackgroundImage, ItemBackgroundGradient } from "./settings-items";
 import {
   areSettingsDraftsEqual,
   buildAIConfigDraftValue,
@@ -70,6 +71,15 @@ export function Settings() {
     return typeof nextDraft.clientConfig["theme.color"] === "string" ? nextDraft.clientConfig["theme.color"] : undefined;
   }
 
+  function getDraftBackgroundValue(nextDraft: SettingsDraft) {
+    return {
+      type: normalizeBackgroundType(nextDraft.clientConfig["background.type"] as string | undefined | null),
+      image: (nextDraft.clientConfig["background.image"] as string) || "",
+      opacity: normalizeImageOpacity(nextDraft.clientConfig["background.imageOpacity"]),
+      gradient: (nextDraft.clientConfig["background.gradient"] as string) || "",
+    };
+  }
+
   useEffect(() => {
     if (ref.current) return;
     loadSettingsConfigState()
@@ -80,6 +90,8 @@ export function Settings() {
         setHasStoredAiApiKey(state.hasStoredAiApiKey);
         mergeSessionConfig(state.draft.clientConfig);
         applyThemeColor(getDraftThemeColor(state.draft));
+        const bg = getDraftBackgroundValue(state.draft);
+        applyBackground(bg.type, bg.image, bg.opacity, bg.gradient);
       })
       .catch((err: any) => {
         showAlert(t("settings.get_config_failed$message", { message: err.message }));
@@ -91,6 +103,8 @@ export function Settings() {
 
     return () => {
       applyThemeColor(getDraftThemeColor(initialDraftRef.current));
+      const initialBg = getDraftBackgroundValue(initialDraftRef.current);
+      applyBackground(initialBg.type, initialBg.image, initialBg.opacity, initialBg.gradient);
     };
   }, [showAlert, t]);
 
@@ -100,6 +114,10 @@ export function Settings() {
   const themeColorValue = normalizeThemeColor(String(clientConfig.get("theme.color") ?? "#fc466b"));
   const feedLayoutValue = normalizeFeedLayout(String(clientConfig.get("feed.layout") ?? "list"));
   const feedCardVariantValue = normalizeFeedCardVariant(String(clientConfig.get("feed.card_variant") ?? "default"));
+  const bgTypeValue = normalizeBackgroundType(String(clientConfig.get("background.type") ?? "none"));
+  const bgImageValue = String(clientConfig.get("background.image") ?? "");
+  const bgImageOpacityValue = normalizeImageOpacity(clientConfig.get("background.imageOpacity"));
+  const bgGradientValue = String(clientConfig.get("background.gradient") ?? "");
   const previewSiteName = String(clientConfig.get("site.name") ?? clientConfig.default("site.name") ?? "Rin");
   const previewSiteAvatar = String(clientConfig.get("site.avatar") ?? clientConfig.default("site.avatar") ?? "");
 
@@ -394,6 +412,63 @@ export function Settings() {
                       <span className="text-sm t-primary">{t("settings.theme_color.custom")}</span>
                     </label>
                   </div>
+                </SettingsCardBody>
+              </div>
+              <div className="mt-4 border-t border-black/5 pt-4 dark:border-white/10">
+                <SettingsCardRow
+                  header={
+                    <SettingsCardHeader
+                      title={t("settings.background.title")}
+                      description={t("settings.background.desc")}
+                    />
+                  }
+                />
+                <SettingsCardBody>
+                  <ItemBackgroundType
+                    title=""
+                    description=""
+                    value={bgTypeValue}
+                    onChange={(value) => {
+                      setConfigValue("client", "background.type", value);
+                      const newBg = getDraftBackgroundValue({ ...draft, clientConfig: { ...draft.clientConfig, ["background.type"]: value } });
+                      applyBackground(value, newBg.image, newBg.opacity, newBg.gradient);
+                    }}
+                  />
+                  {bgTypeValue === "image" && (
+                    <div className="mt-4">
+                      <ItemBackgroundImage
+                        title={t("settings.background.image.title")}
+                        description={t("settings.background.image.desc")}
+                        value={bgImageValue}
+                        opacity={bgImageOpacityValue}
+                        onChange={(value) => {
+                          setConfigValue("client", "background.image", value);
+                          const newBg = getDraftBackgroundValue({ ...draft, clientConfig: { ...draft.clientConfig, ["background.image"]: value } });
+                          applyBackground("image", value, newBg.opacity, newBg.gradient);
+                        }}
+                        onOpacityChange={(opacity) => {
+                          setConfigValue("client", "background.imageOpacity", opacity);
+                          const newBg = getDraftBackgroundValue({ ...draft, clientConfig: { ...draft.clientConfig, ["background.imageOpacity"]: opacity } });
+                          applyBackground("image", newBg.image, opacity, newBg.gradient);
+                        }}
+                      />
+                    </div>
+                  )}
+                  {bgTypeValue === "gradient" && (
+                    <div className="mt-4">
+                      <ItemBackgroundGradient
+                        title={t("settings.background.gradient.title")}
+                        description={t("settings.background.gradient.desc")}
+                        value={bgGradientValue}
+                        onChange={(value) => {
+                          setConfigValue("client", "background.gradient", value);
+                          const newBg = getDraftBackgroundValue({ ...draft, clientConfig: { ...draft.clientConfig, ["background.gradient"]: value } });
+                          applyBackground("gradient", newBg.image, newBg.opacity, value);
+                        }}
+                        t={t}
+                      />
+                    </div>
+                  )}
                 </SettingsCardBody>
               </div>
               <div className="mt-4 border-t border-black/5 pt-4 dark:border-white/10">

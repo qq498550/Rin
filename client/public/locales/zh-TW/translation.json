@@ -482,6 +482,45 @@
         "orange": "橙色"
       }
     },
+    "background": {
+      "title": "背景設定",
+      "desc": "配置站點背景圖片、透明度或漸層色",
+      "type": {
+        "title": "背景類型",
+        "desc": "選擇背景顯示方式",
+        "options": {
+          "none": "無背景",
+          "image": "背景圖片",
+          "gradient": "漸層色"
+        }
+      },
+      "image": {
+        "title": "背景圖片",
+        "desc": "上傳或輸入背景圖片 URL",
+        "label": "圖片 URL",
+        "opacity": {
+          "title": "圖片透明度",
+          "desc": "設定背景圖片的透明度 (0-1)，值越小越透明"
+        }
+      },
+      "gradient": {
+        "title": "漸層色",
+        "desc": "設定 CSS 漸層色，例如：linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "label": "漸層色 CSS",
+        "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      },
+      "presets": {
+        "title": "預設漸層",
+        "options": {
+          "purple-blue": "紫藍漸層",
+          "pink-orange": "粉橙漸層",
+          "blue-teal": "藍青漸層",
+          "sunset": "日落漸層",
+          "ocean": "海洋漸層",
+          "forest": "森林漸層"
+        }
+      }
+    },
     "rss": {
       "desc": "啟用網站底部 RSS 訂閱連結",
       "title": "RSS 訂閱連結"

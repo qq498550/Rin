@@ -14,6 +14,10 @@ export const SITE_CONFIG_KEYS = {
     feedCardVariant: "feed.card_variant",
     headerLayout: "header.layout",
     themeColor: "theme.color",
+    backgroundType: "background.type",
+    backgroundImage: "background.image",
+    backgroundImageOpacity: "background.imageOpacity",
+    backgroundGradient: "background.gradient",
 } as const;
 
 // Hook to get site configuration
@@ -37,6 +41,10 @@ export function useSiteConfig() {
         feedCardVariant: normalizeFeedCardVariant(config.get<string>(SITE_CONFIG_KEYS.feedCardVariant) || "default"),
         headerLayout: config.get<string>(SITE_CONFIG_KEYS.headerLayout) || "classic",
         themeColor: config.get<string>(SITE_CONFIG_KEYS.themeColor) || "#fc466b",
+        backgroundType: config.get<string>(SITE_CONFIG_KEYS.backgroundType) || "none",
+        backgroundImage: config.get<string>(SITE_CONFIG_KEYS.backgroundImage) || "",
+        backgroundImageOpacity: config.get<number>(SITE_CONFIG_KEYS.backgroundImageOpacity) ?? 0.5,
+        backgroundGradient: config.get<string>(SITE_CONFIG_KEYS.backgroundGradient) || "",
     };
 }
 

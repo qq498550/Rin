@@ -482,6 +482,45 @@
         "orange": "橙色"
       }
     },
+    "background": {
+      "title": "背景设置",
+      "desc": "配置站点背景图片、透明度或渐变色",
+      "type": {
+        "title": "背景类型",
+        "desc": "选择背景显示方式",
+        "options": {
+          "none": "无背景",
+          "image": "背景图片",
+          "gradient": "渐变色"
+        }
+      },
+      "image": {
+        "title": "背景图片",
+        "desc": "上传或输入背景图片 URL",
+        "label": "图片 URL",
+        "opacity": {
+          "title": "图片透明度",
+          "desc": "设置背景图片的透明度 (0-1)，值越小越透明"
+        }
+      },
+      "gradient": {
+        "title": "渐变色",
+        "desc": "设置 CSS 渐变色，例如：linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "label": "渐变色 CSS",
+        "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      },
+      "presets": {
+        "title": "预设渐变",
+        "options": {
+          "purple-blue": "紫蓝渐变",
+          "pink-orange": "粉橙渐变",
+          "blue-teal": "蓝青渐变",
+          "sunset": "日落渐变",
+          "ocean": "海洋渐变",
+          "forest": "森林渐变"
+        }
+      }
+    },
     "rss": {
       "desc": "启用站点底部 RSS 订阅链接",
       "title": "RSS 订阅链接"

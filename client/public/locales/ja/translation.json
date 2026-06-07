@@ -473,6 +473,45 @@
         "orange": "オレンジ"
       }
     },
+    "background": {
+      "title": "背景設定",
+      "desc": "サイトの背景画像、透明度、グラデーションを設定します",
+      "type": {
+        "title": "背景タイプ",
+        "desc": "背景の表示方法を選択",
+        "options": {
+          "none": "背景なし",
+          "image": "背景画像",
+          "gradient": "グラデーション"
+        }
+      },
+      "image": {
+        "title": "背景画像",
+        "desc": "背景画像をアップロードまたは URL を入力",
+        "label": "画像 URL",
+        "opacity": {
+          "title": "画像不透明度",
+          "desc": "背景画像の不透明度を設定 (0-1)。値が小さいほど透明"
+        }
+      },
+      "gradient": {
+        "title": "グラデーション",
+        "desc": "CSS グラデーションを設定。例: linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "label": "グラデーション CSS",
+        "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      },
+      "presets": {
+        "title": "プリセットグラデーション",
+        "options": {
+          "purple-blue": "紫青",
+          "pink-orange": "ピンクオレンジ",
+          "blue-teal": "ブルーティール",
+          "sunset": "夕焼け",
+          "ocean": "海",
+          "forest": "森林"
+        }
+      }
+    },
     "rss": {
       "desc": "サイトフッターにRSS購読リンクを有効にする",
       "title": "RSS 購読リンク"

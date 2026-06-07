@@ -482,6 +482,45 @@
         "orange": "Orange"
       }
     },
+    "background": {
+      "title": "Background Settings",
+      "desc": "Configure site background image, opacity, or gradient",
+      "type": {
+        "title": "Background Type",
+        "desc": "Choose how the background is displayed",
+        "options": {
+          "none": "No Background",
+          "image": "Background Image",
+          "gradient": "Gradient"
+        }
+      },
+      "image": {
+        "title": "Background Image",
+        "desc": "Upload or enter a background image URL",
+        "label": "Image URL",
+        "opacity": {
+          "title": "Image Opacity",
+          "desc": "Set background image opacity (0-1), lower values are more transparent"
+        }
+      },
+      "gradient": {
+        "title": "Gradient",
+        "desc": "Set a CSS gradient, e.g. linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "label": "Gradient CSS",
+        "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      },
+      "presets": {
+        "title": "Preset Gradients",
+        "options": {
+          "purple-blue": "Purple Blue",
+          "pink-orange": "Pink Orange",
+          "blue-teal": "Blue Teal",
+          "sunset": "Sunset",
+          "ocean": "Ocean",
+          "forest": "Forest"
+        }
+      }
+    },
     "rss": {
       "desc": "Enable RSS subscription link at the site footer",
       "title": "RSS Subscription Link"
