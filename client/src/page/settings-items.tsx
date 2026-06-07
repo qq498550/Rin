@@ -415,6 +415,27 @@ export function ItemBackgroundGradient({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Parse current gradient value to extract colors and angle
+  function parseGradient(gradient: string): { color1: string; color2: string; angle: number; preset: string | null } {
+    const match = gradient.match(/^linear-gradient\((\d+)deg,\s*(#[0-9a-fA-F]{3,8})\s*0%,\s*(#[0-9a-fA-F]{3,8})\s*100%\)$/);
+    if (match) {
+      return { color1: match[2], color2: match[3], angle: parseInt(match[1], 10), preset: null };
+    }
+    // Try to find preset key
+    for (const key of Object.keys(GRADIENT_PRESETS) as GradientPresetKey[]) {
+      if (GRADIENT_PRESETS[key] === gradient) {
+        return { color1: "", color2: "", angle: 135, preset: key };
+      }
+    }
+    return { color1: "#667eea", color2: "#764ba2", angle: 135, preset: null };
+  }
+
+  const parsed = parseGradient(value);
+
+  function buildGradient(color1: string, color2: string, angle: number): string {
+    return `linear-gradient(${angle}deg, ${color1} 0%, ${color2} 100%)`;
+  }
+
   return (
     <div className="w-full">
       <SettingsCard>
@@ -426,28 +447,21 @@ export function ItemBackgroundGradient({
           <SettingsCardRow
             header={<SettingsCardHeader title={title} description={description} />}
             action={
-              <span className="max-w-56 truncate text-sm text-neutral-500 dark:text-neutral-400">
-                {value || t("settings.background.gradient.placeholder")}
-              </span>
+              parsed.preset ? (
+                <span className="max-w-56 truncate text-sm text-neutral-500 dark:text-neutral-400">
+                  {t(`settings.background.presets.options.${parsed.preset}`)}
+                </span>
+              ) : (
+                <div className="flex h-5 w-5 shrink-0 items-center rounded-full" style={{
+                  background: parsed.color1 ? `linear-gradient(135deg, ${parsed.color1}, ${parsed.color2})` : undefined,
+                }} />
+              )
             }
           />
         </button>
         {isOpen ? (
           <SettingsCardBody>
             <div className="space-y-4">
-              <div>
-                <label className="mb-1 block text-xs font-medium text-neutral-600 dark:text-neutral-400">
-                  {t("settings.background.gradient.label")}
-                </label>
-                <input
-                  type="text"
-                  value={value}
-                  onChange={(e) => onChange(e.target.value)}
-                  placeholder="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-                  className="w-full rounded-xl border border-black/10 bg-w px-4 py-3 text-sm t-primary outline-none transition-colors placeholder:text-neutral-400 focus:border-black/20 focus:ring-2 focus:ring-theme/10 dark:border-white/10 dark:placeholder:text-neutral-500 dark:focus:border-white/20"
-                />
-              </div>
-
               {/* Preset Gradients */}
               <div>
                 <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
@@ -481,10 +495,57 @@ export function ItemBackgroundGradient({
                 </div>
               </div>
 
+              <div className="border-t border-black/5 pt-4 dark:border-white/5" />
+
+              {/* Custom Gradient */}
+              <div>
+                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+                  {t("settings.background.gradient.label")}
+                </label>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm text-neutral-600 dark:text-neutral-300">{t("settings.background.gradient.start_color")}</label>
+                    <input
+                      type="color"
+                      value={parsed.color1 || "#667eea"}
+                      onChange={(e) => {
+                        onChange(buildGradient(e.target.value, parsed.color2, parsed.angle));
+                      }}
+                      className="h-8 w-12 cursor-pointer rounded-lg border border-black/10 bg-transparent p-0 dark:border-white/10"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm text-neutral-600 dark:text-neutral-300">{t("settings.background.gradient.end_color")}</label>
+                    <input
+                      type="color"
+                      value={parsed.color2 || "#764ba2"}
+                      onChange={(e) => {
+                        onChange(buildGradient(parsed.color1, e.target.value, parsed.angle));
+                      }}
+                      className="h-8 w-12 cursor-pointer rounded-lg border border-black/10 bg-transparent p-0 dark:border-white/10"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm text-neutral-600 dark:text-neutral-300">{t("settings.background.gradient.angle")}</label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={360}
+                      value={parsed.angle}
+                      onChange={(e) => {
+                        onChange(buildGradient(parsed.color1, parsed.color2, parseInt(e.target.value, 10)));
+                      }}
+                      className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-neutral-200 accent-theme dark:bg-neutral-700"
+                    />
+                    <span className="w-10 shrink-0 text-right text-sm text-neutral-600 dark:text-neutral-300">{parsed.angle}°</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Preview */}
               {value && (
                 <div className="mt-2">
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">预览：</p>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">{t("settings.background.preview")}</p>
                   <div
                     className="mt-1 h-32 w-full rounded-xl"
                     style={{ background: value }}

@@ -506,7 +506,10 @@
       "gradient": {
         "title": "渐变色",
         "desc": "设置 CSS 渐变色，例如：linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        "label": "渐变色 CSS",
+        "label": "自定义渐变色",
+        "start_color": "起始颜色",
+        "end_color": "结束颜色",
+        "angle": "角度",
         "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
       },
       "presets": {
@@ -519,7 +522,8 @@
           "ocean": "海洋渐变",
           "forest": "森林渐变"
         }
-      }
+      },
+      "preview": "预览"
     },
     "rss": {
       "desc": "启用站点底部 RSS 订阅链接",

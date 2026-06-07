@@ -37,11 +37,31 @@ export function applyBackground(
       if (imageUrl) {
         root.style.setProperty("--bg-image", `url("${imageUrl}")`);
         root.style.setProperty("--bg-opacity", String(Math.max(0, Math.min(1, imageOpacity))));
-        body.style.backgroundImage = `var(--bg-image)`;
-        body.style.backgroundAttachment = "fixed";
-        body.style.backgroundSize = "cover";
-        body.style.backgroundPosition = "center";
-        body.style.backgroundRepeat = "no-repeat";
+        body.style.position = "relative";
+        body.style.backgroundImage = "";
+        body.style.backgroundAttachment = "";
+        // Set the ::before pseudo-element for image background with opacity control
+        const styleId = "bg-image-style";
+        let styleEl = document.getElementById(styleId);
+        if (!styleEl) {
+          styleEl = document.createElement("style");
+          styleEl.id = styleId;
+          document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+          body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: var(--bg-opacity);
+            pointer-events: none;
+          }
+        `;
       }
       break;
 
@@ -49,14 +69,33 @@ export function applyBackground(
       if (gradient) {
         const appliedGradient = getGradientPreset(gradient) || gradient;
         root.style.setProperty("--bg-gradient", appliedGradient);
+        body.style.position = "";
         body.style.backgroundImage = `var(--bg-gradient)`;
         body.style.backgroundAttachment = "fixed";
+        body.style.backgroundSize = "";
+        body.style.backgroundPosition = "";
+        // Remove the image overlay style when switching to gradient
+        const styleId = "bg-image-style";
+        const styleEl = document.getElementById(styleId);
+        if (styleEl) {
+          styleEl.textContent = "";
+        }
       }
       break;
 
     case "none":
     default:
-      // No background - body will use the default bg-background-light/dark from Tailwind
+      // Remove all background elements
+      body.style.backgroundImage = "";
+      body.style.backgroundAttachment = "";
+      body.style.backgroundSize = "";
+      body.style.backgroundPosition = "";
+      body.style.position = "";
+      const styleId = "bg-image-style";
+      const styleEl = document.getElementById(styleId);
+      if (styleEl) {
+        styleEl.textContent = "";
+      }
       break;
   }
 }

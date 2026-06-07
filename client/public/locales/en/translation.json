@@ -506,7 +506,10 @@
       "gradient": {
         "title": "Gradient",
         "desc": "Set a CSS gradient, e.g. linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        "label": "Gradient CSS",
+        "label": "Custom Gradient",
+        "start_color": "Start Color",
+        "end_color": "End Color",
+        "angle": "Angle",
         "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
       },
       "presets": {
@@ -519,7 +522,8 @@
           "ocean": "Ocean",
           "forest": "Forest"
         }
-      }
+      },
+      "preview": "Preview"
     },
     "rss": {
       "desc": "Enable RSS subscription link at the site footer",

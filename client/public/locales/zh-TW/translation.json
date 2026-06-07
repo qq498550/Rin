@@ -506,7 +506,10 @@
       "gradient": {
         "title": "漸層色",
         "desc": "設定 CSS 漸層色，例如：linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        "label": "漸層色 CSS",
+        "label": "自定義漸層色",
+        "start_color": "起始顏色",
+        "end_color": "結束顏色",
+        "angle": "角度",
         "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
       },
       "presets": {
@@ -519,7 +522,8 @@
           "ocean": "海洋漸層",
           "forest": "森林漸層"
         }
-      }
+      },
+      "preview": "預覽"
     },
     "rss": {
       "desc": "啟用網站底部 RSS 訂閱連結",

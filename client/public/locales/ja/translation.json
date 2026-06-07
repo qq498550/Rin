@@ -497,7 +497,10 @@
       "gradient": {
         "title": "グラデーション",
         "desc": "CSS グラデーションを設定。例: linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        "label": "グラデーション CSS",
+        "label": "カスタムグラデーション",
+        "start_color": "開始色",
+        "end_color": "終了色",
+        "angle": "角度",
         "placeholder": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
       },
       "presets": {
@@ -510,7 +513,8 @@
           "ocean": "海",
           "forest": "森林"
         }
-      }
+      },
+      "preview": "プレビュー"
     },
     "rss": {
       "desc": "サイトフッターにRSS購読リンクを有効にする",
