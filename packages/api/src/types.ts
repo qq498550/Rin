@@ -286,6 +286,23 @@ export interface UploadResponse {
   url: string;
 }
 
+export interface PresignedUrlRequest {
+  files: Array<{
+    key: string;
+    contentType: string;
+    expiresIn?: number;
+  }>;
+}
+
+export interface PresignedUrlResponse {
+  files: Array<{
+    key: string;
+    presignedUrl: string;
+    publicUrl: string;
+    contentType: string;
+  }>;
+}
+
 // ============================================================================
 // Search Types
 // ============================================================================

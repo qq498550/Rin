@@ -4,7 +4,8 @@ import ReactLoading from "react-loading";
 import {
   DEFAULT_IMAGE_MAX_FILE_SIZE,
   isImageFile,
-  uploadImageFile,
+  uploadImageWithCompression,
+  type ImageVariantKey,
 } from "../utils/image-upload";
 
 type ImageUploadInputProps = {
@@ -15,6 +16,7 @@ type ImageUploadInputProps = {
   disabled?: boolean;
   shape?: "rounded" | "circle";
   maxFileSize?: number;
+  variant?: ImageVariantKey;
 };
 
 export function ImageUploadInput({
@@ -25,6 +27,7 @@ export function ImageUploadInput({
   disabled = false,
   shape = "rounded",
   maxFileSize = DEFAULT_IMAGE_MAX_FILE_SIZE,
+  variant = "content",
 }: ImageUploadInputProps) {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +53,7 @@ export function ImageUploadInput({
 
     setUploading(true);
     try {
-      const result = await uploadImageFile(file);
+      const result = await uploadImageWithCompression(file, { variant });
       onChange(result.url);
     } catch (error) {
       showError(error instanceof Error ? error.message : t("upload.failed"));

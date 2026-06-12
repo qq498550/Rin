@@ -6,7 +6,7 @@ import Loading from 'react-loading';
 import { FlatInset, FlatTabButton } from "@rin/ui";
 import { useAlert } from "./dialog";
 import { useColorMode } from "../utils/darkModeUtils";
-import { buildMarkdownImage, uploadImageFile } from "../utils/image-upload";
+import { buildMarkdownImage, uploadImageWithCompression } from "../utils/image-upload";
 import { Markdown } from "./markdown";
 
 
@@ -32,7 +32,7 @@ export function MarkdownEditor({ content, setContent, placeholder = "> Write you
     showAlert: (msg: string) => void,
   ) {
     try {
-      const result = await uploadImageFile(file);
+      const result = await uploadImageWithCompression(file, { variant: "content" });
       const editorInstance = editorRef.current;
       if (!editorInstance) return;
       editorInstance.executeEdits(undefined, [{

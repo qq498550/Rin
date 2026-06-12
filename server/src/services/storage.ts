@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import type { AppContext } from "../core/hono-types";
 import { profileAsync } from "../core/server-timing";
-import { getStorageObject, putStorageObject } from "../utils/storage";
+import { getStorageObject, putStorageObject, resolveStorageTarget } from "../utils/storage";
 
 function buf2hex(buffer: ArrayBuffer) {
     return [...new Uint8Array(buffer)]
@@ -12,7 +12,7 @@ function buf2hex(buffer: ArrayBuffer) {
 export function StorageService(): Hono {
     const app = new Hono();
 
-    // POST /storage
+    // POST /storage - Upload file (handles both original and pre-compressed files)
     app.post('/', async (c: AppContext) => {
         const uid = c.get('uid');
         const env = c.get('env');
