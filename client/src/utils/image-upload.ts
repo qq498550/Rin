@@ -6,7 +6,7 @@ export const DEFAULT_IMAGE_MAX_FILE_SIZE = 5 * 1024 * 1024;
 // Image compression configuration
 export const IMAGE_VARIANTS = {
   thumbnail: { maxWidth: 320, maxHeight: 320, quality: 0.75, suffix: "thumb" },
-  content: { maxWidth: 1200, maxHeight: 1200, quality: 0.8, suffix: "content" },
+  content: { maxWidth: 1920, maxHeight: 1920, quality: 0.8, suffix: "content" },
   hero: { maxWidth: 1920, maxHeight: 1920, quality: 0.85, suffix: "hero" },
   original: { maxWidth: 3840, maxHeight: 3840, quality: 0.9, suffix: "original" },
 } as const;
