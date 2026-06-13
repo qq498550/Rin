@@ -51,41 +51,49 @@ export function MarkdownEditor({ content, setContent, placeholder = "> Write you
 
   const handlePaste = async (event: React.ClipboardEvent<HTMLDivElement>) => {
     const clipboardData = event.clipboardData;
-    if (clipboardData.files.length === 1) {
+    if (clipboardData.files.length >= 1) {
       const editor = editorRef.current;
       if (!editor) return;
       editor.trigger(undefined, "undo", undefined);
       setUploading(true);
-      const myfile = clipboardData.files[0] as File;
-      const selection = editor.getSelection();
-      if (!selection) {
+      try {
+        for (let i = 0; i < clipboardData.files.length; i++) {
+          const file = clipboardData.files[i] as File;
+          const selection = editor.getSelection();
+          if (!selection) break;
+          await insertImage(file, selection, showAlert);
+        }
+      } finally {
         setUploading(false);
-        return;
       }
-      void insertImage(myfile, selection, showAlert).finally(() => {
-        setUploading(false);
-      });
     }
   };
 
   function UploadImageButton() {
     const uploadRef = useRef<HTMLInputElement>(null);
     
-    const upChange = (event: any) => {
-      for (let i = 0; i < event.currentTarget.files.length; i++) {
-        const file = event.currentTarget.files[i];
-        if (file.size > 5 * 1024000) {
-          showAlert(t("upload.failed$size", { size: 5 }));
-          uploadRef.current!.value = "";
-        } else {
+    const upChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = event.currentTarget.files;
+      if (!files || files.length === 0) return;
+      
+      setUploading(true);
+      try {
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (file.size > 5 * 1024 * 1024) {
+            showAlert(t("upload.failed$size", { size: 5 }));
+            continue; // Skip oversized file, continue uploading others
+          }
           const editor = editorRef.current;
-          if (!editor) return;
+          if (!editor) break;
           const selection = editor.getSelection();
-          if (!selection) return;
-          setUploading(true);
-          void insertImage(file, selection, showAlert).finally(() => {
-            setUploading(false);
-          });
+          if (!selection) break;
+          await insertImage(file, selection, showAlert);
+        }
+      } finally {
+        setUploading(false);
+        if (uploadRef.current) {
+          uploadRef.current.value = "";
         }
       }
     };
@@ -102,6 +110,7 @@ export function MarkdownEditor({ content, setContent, placeholder = "> Write you
           className="hidden"
           type="file"
           accept="image/gif,image/jpeg,image/jpg,image/png"
+          multiple
         />
         <i className="ri-image-add-line" />
         <span>Image</span>
@@ -172,18 +181,20 @@ export function MarkdownEditor({ content, setContent, placeholder = "> Write you
         <div className={"flex min-w-0 flex-col " + (preview === 'preview' ? "hidden" : "")}>
           <div
             className={"relative min-h-0 overflow-hidden rounded-none border-0 bg-w"}
-            onDrop={(e) => {
+            onDrop={async (e) => {
               e.preventDefault();
               const editor = editorRef.current;
               if (!editor) return;
-              for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                const selection = editor.getSelection();
-                if (!selection) return;
-                const file = e.dataTransfer.files[i];
-                setUploading(true);
-                void insertImage(file, selection, showAlert).finally(() => {
-                  setUploading(false);
-                });
+              setUploading(true);
+              try {
+                for (let i = 0; i < e.dataTransfer.files.length; i++) {
+                  const selection = editor.getSelection();
+                  if (!selection) break;
+                  const file = e.dataTransfer.files[i];
+                  await insertImage(file, selection, showAlert);
+                }
+              } finally {
+                setUploading(false);
               }
             }}
             onPaste={handlePaste}
