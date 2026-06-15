@@ -226,7 +226,9 @@ a.toc-link {
 .toc-content blockquote * {
   overflow-wrap: break-word !important;
   word-break: break-word !important;
-  white-space: normal !important;
+  /* Preserve explicit line breaks in multi-line markdown quotes,
+     while still allowing long lines to wrap automatically. */
+  white-space: pre-wrap !important;
 }
 
 .toc-content blockquote code,
