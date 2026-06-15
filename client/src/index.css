@@ -210,3 +210,21 @@ a.toc-link {
 .is-active-link::before {
   @apply bg-theme;
 }
+
+/* Ensure markdown content never overflows horizontally */
+.toc-content {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.toc-content blockquote,
+.toc-content blockquote * {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.toc-content blockquote code,
+.toc-content blockquote pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
