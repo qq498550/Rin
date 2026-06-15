@@ -238,7 +238,7 @@ export function Markdown({ content }: { content: string }) {
         blockquote({ children, ...props }) {
           return (
             <blockquote
-              className="border-l-4 border-gray-300 dark:border-gray-500 pl-4 italic text-gray-500 dark:text-gray-400"
+              className="border-l-4 border-gray-300 dark:border-gray-500 pl-4 italic text-gray-500 dark:text-gray-400 overflow-hidden break-words"
               {...props}
             >
               {children}
