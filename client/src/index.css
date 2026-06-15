@@ -213,18 +213,35 @@ a.toc-link {
 
 /* Ensure markdown content never overflows horizontally */
 .toc-content {
-  overflow-x: hidden;
-  max-width: 100%;
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+}
+
+.toc-content * {
+  max-width: 100% !important;
 }
 
 .toc-content blockquote,
 .toc-content blockquote * {
-  overflow-wrap: break-word;
-  word-break: break-word;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
 }
 
 .toc-content blockquote code,
 .toc-content blockquote pre {
-  white-space: pre-wrap;
-  word-break: break-all;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+}
+
+/* Prevent inline code from overflowing */
+.toc-content code {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+}
+
+.toc-content a {
+  word-break: break-all !important;
 }

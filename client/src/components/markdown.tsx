@@ -226,7 +226,7 @@ export function Markdown({ content }: { content: string }) {
             return (
               <code
                 {...rest}
-                className={`bg-[#eff1f3] dark:bg-[#4a5061] h-[24px] px-[4px] rounded-md mx-[2px] py-[2px] text-neutral-800 dark:text-neutral-300 ${className || ""
+                className={`bg-[#eff1f3] dark:bg-[#4a5061] px-[4px] rounded-md mx-[2px] py-[2px] text-neutral-800 dark:text-neutral-300 whitespace-normal break-all ${className || ""
                   }`}
                 style={inlineCodeStyle}
               >
@@ -238,7 +238,8 @@ export function Markdown({ content }: { content: string }) {
         blockquote({ children, ...props }) {
           return (
             <blockquote
-              className="border-l-4 border-gray-300 dark:border-gray-500 pl-4 italic text-gray-500 dark:text-gray-400 whitespace-normal overflow-hidden break-all"
+              className="border-l-4 border-gray-300 dark:border-gray-500 pl-4 italic text-gray-500 dark:text-gray-400"
+              style={{ overflowWrap: "break-word", wordBreak: "break-word", whiteSpace: "normal" }}
               {...props}
             >
               {children}
@@ -368,7 +369,7 @@ export function Markdown({ content }: { content: string }) {
         },
         p({ children, node, ...props }) {
           return (
-            <p className="mt-2 py-1" {...props}>
+            <p className="mt-2 py-1" style={{ overflowWrap: "break-word", wordBreak: "break-word" }} {...props}>
               {children}
             </p>
           );
