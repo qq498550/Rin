@@ -85,7 +85,7 @@ const FEED_CARD_STYLES: Record<
         title: "text-2xl font-semibold tracking-[-0.02em] text-neutral-900 dark:text-white text-pretty overflow-hidden",
     },
     butterfly: {
-        card: "my-4 inline-block w-full overflow-hidden rounded-[28px] border border-black/5 bg-w shadow-[0_20px_50px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] dark:border-white/10 dark:bg-neutral-900 flex flex-col",
+        card: "my-4 inline-block w-full overflow-hidden rounded-[28px] border border-black/5 bg-w shadow-[0_20px_50px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_70px_rgba(15,23,42,0.12)] hover:bg-[rgb(var(--theme-rgb)/0.05)] dark:border-white/10 dark:bg-neutral-900 flex flex-col",
         imageWrap: "",
         meta: "flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400",
         summary: "line-clamp-3 text-pretty text-base leading-7 text-neutral-600 dark:text-neutral-300",
