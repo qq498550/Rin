@@ -17,7 +17,7 @@ function FeedCardImage({ src, variant }: { src: string; variant: FeedCardVariant
     const imageFrameClass =
         variant === "editorial"
             ? "relative flex max-h-80 w-full flex-row items-center overflow-hidden rounded-[20px]"
-            : variant === "butterfly"
+            : variant === "butterfly" || variant === "fashion"
                 ? "relative flex h-full w-full flex-row items-center overflow-hidden"
                 : "relative mb-2 flex max-h-80 w-full flex-row items-center overflow-hidden rounded-xl";
 
@@ -36,7 +36,7 @@ function FeedCardImage({ src, variant }: { src: string; variant: FeedCardVariant
     return (
         <div
             className={imageFrameClass}
-            style={variant === "butterfly" ? undefined : { aspectRatio }}
+            style={variant === "butterfly" || variant === "fashion" ? undefined : { aspectRatio }}
         >
             {blurhash && !loaded ? (
                 <canvas
@@ -90,6 +90,13 @@ const FEED_CARD_STYLES: Record<
         meta: "flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400",
         summary: "line-clamp-3 text-pretty text-base leading-7 text-neutral-600 dark:text-neutral-300",
         title: "text-2xl font-bold text-neutral-900 dark:text-white text-pretty overflow-hidden leading-tight",
+    },
+    fashion: {
+        card: "my-4 inline-block w-full overflow-hidden rounded-2xl border border-black/5 bg-w shadow-[0_4px_20px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.1)] hover:bg-[rgb(var(--theme-rgb)/0.05)] dark:border-white/10 dark:bg-neutral-900 flex flex-col md:flex-row",
+        imageWrap: "",
+        meta: "flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400",
+        summary: "line-clamp-3 text-pretty text-base leading-7 text-neutral-600 dark:text-neutral-300",
+        title: "text-xl font-semibold tracking-[-0.01em] text-neutral-900 dark:text-white text-pretty overflow-hidden leading-snug",
     },
 };
 
@@ -154,6 +161,49 @@ export function FeedCard({ id, title, avatar, draft, listed, top, summary, hasht
                     <p className={`mt-4 ${styles.summary}`}>{summary}</p>
                     {hashtags.length > 0 && (
                         <div className="mt-4 flex flex-row flex-wrap justify-start gap-2">
+                            {hashtags.map(({ name }, tagIndex) => (
+                                <HashTag key={tagIndex} name={name} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+        return preview ? body : <Link href={`/feed/${id}`} target="_blank" className="block w-full">{body}</Link>;
+    }
+
+    if (activeVariant === "fashion") {
+        const body = (
+            <div className={styles.card}>
+                {avatar ? (
+                    <div className="h-48 w-full shrink-0 overflow-hidden md:h-auto md:w-[38%] md:min-h-[240px]">
+                        <FeedCardImage src={avatar} variant="fashion" />
+                    </div>
+                ) : null}
+                <div className="flex flex-1 flex-col justify-center p-5 md:p-7">
+                    <h2 className={styles.title}>{title}</h2>
+                    <p className={`mt-2.5 ${styles.meta}`}>
+                        <span className="inline-flex items-center gap-1.5" title={new Date(createdAt).toLocaleString()}>
+                            <i className="ri-calendar-line" aria-hidden="true" />
+                            <span>
+                                {createdAt === updatedAt ? timeago(createdAt) : t('feed_card.published$time', { time: timeago(createdAt) })}
+                            </span>
+                        </span>
+                        {createdAt !== updatedAt && (
+                            <span className="inline-flex items-center gap-1.5" title={new Date(updatedAt).toLocaleString()}>
+                                <i className="ri-refresh-line" aria-hidden="true" />
+                                <span>{t('feed_card.updated$time', { time: timeago(updatedAt) })}</span>
+                            </span>
+                        )}
+                    </p>
+                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+                        {draft === 1 && <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">{t("draft")}</span>}
+                        {listed === 0 && <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">{t("unlisted")}</span>}
+                        {top === 1 && <span className="rounded-full bg-theme/10 px-2.5 py-0.5 text-xs text-theme">{t('article.top.title')}</span>}
+                    </p>
+                    <p className={`mt-3 ${styles.summary}`}>{summary}</p>
+                    {hashtags.length > 0 && (
+                        <div className="mt-3 flex flex-row flex-wrap justify-start gap-2">
                             {hashtags.map(({ name }, tagIndex) => (
                                 <HashTag key={tagIndex} name={name} />
                             ))}

@@ -451,12 +451,14 @@
       "options": {
         "default": "默认",
         "editorial": "杂志风",
-        "butterfly": "Butterfly"
+        "butterfly": "Butterfly",
+        "fashion": "时尚风"
       },
       "preview": {
         "default": "当前这套紧凑卡片，表面处理简单，干净直接。",
         "editorial": "更有展示感的卡片，带轻微主题染色、更强层级和类似画册的 framing。",
-        "butterfly": "Butterfly 主题风格的大图卡片，左右交替排列，带有柔和阴影。"
+        "butterfly": "Butterfly 主题风格的大图卡片，左右交替排列，带有柔和阴影。",
+        "fashion": "简洁时尚的横向卡片，图片固定左侧，悬停时呈现主题色淡染背景。"
       }
 
     },
