@@ -450,12 +450,15 @@
       "desc": "Choose the visual treatment used by article cards across feed, search, and tag lists",
       "options": {
         "default": "Default",
-        "editorial": "Editorial"
+        "editorial": "Editorial",
+        "butterfly": "Butterfly"
       },
       "preview": {
         "default": "The current compact card with a simple surface and minimal framing.",
-        "editorial": "A more expressive card with a tinted surface, stronger hierarchy, and gallery-like framing."
+        "editorial": "A more expressive card with a tinted surface, stronger hierarchy, and gallery-like framing.",
+        "butterfly": "Butterfly-style wide cards with alternating left/right images and a soft shadowed surface."
       }
+
     },
     "feed_layout": {
       "title": "Feed layout",

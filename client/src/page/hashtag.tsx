@@ -79,8 +79,8 @@ export function HashtagPage({ name }: { name: string }) {
                     </div>
                     <Waiting for={status === 'idle'}>
                         <div className={feedListClass}>
-                            {hashtag?.feeds?.map(({ id, ...feed }: any) => (
-                                <FeedCard key={id} id={id} {...feed} />
+                            {hashtag?.feeds?.map(({ id, ...feed }: any, index: number) => (
+                                <FeedCard key={id} id={id} index={index} {...feed} />
                             ))}
                         </div>
                     </Waiting>
