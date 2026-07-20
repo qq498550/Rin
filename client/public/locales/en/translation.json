@@ -457,8 +457,8 @@
       "preview": {
         "default": "The current compact card with a simple surface and minimal framing.",
         "editorial": "A more expressive card with a tinted surface, stronger hierarchy, and gallery-like framing.",
-        "butterfly": "Butterfly-style wide cards with alternating left/right images and a subtle theme-tinted hover background.",
-        "fashion": "Clean horizontal cards with a fixed left image and a subtle theme-tinted hover background."
+        "butterfly": "Butterfly-style wide cards with alternating left/right images. Default theme-tinted surface, turning white on hover.",
+        "fashion": "Clean horizontal cards with a fixed left image. Default theme-tinted surface, turning white on hover."
       }
 
     },
