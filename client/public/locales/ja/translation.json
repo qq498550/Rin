@@ -280,6 +280,17 @@
       "desc": "サイトのフッターコンテンツを設定する（HTML）",
       "title": "フッター"
     },
+    "custom_code": {
+      "title": "カスタムコード",
+      "head": {
+        "title": "カスタムヘッドコード",
+        "desc": "フロントエンドサイトの <head> タグ内に注入する HTML/JavaScript コードを入力します。Umami や Google Analytics などのトラッキングスクリプトに使用します。"
+      },
+      "footer": {
+        "title": "カスタムフッターコード",
+        "desc": "フロントエンドサイトの </body> タグの直前に注入する HTML/JavaScript コードを入力します。フッターウィジェットやチャットプラグインなどに使用します。"
+      }
+    },
     "webhook": {
       "title": "Webhook",
       "url": {

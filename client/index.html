@@ -4,9 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script data-cfasync="false" src="/api/config/client/bootstrap.js"></script>
+    <script data-cfasync="false">
+      (function() {
+        function inject(target, html) {
+          if (!html || typeof html !== 'string') return;
+          var frag = document.createDocumentFragment();
+          var wrapper = document.createElement('div');
+          wrapper.innerHTML = html;
+          while (wrapper.firstChild) {
+            var node = wrapper.firstChild;
+            wrapper.removeChild(node);
+            if (node.nodeName === 'SCRIPT') {
+              var s = document.createElement('script');
+              for (var i = 0; i < node.attributes.length; i++) {
+                s.setAttribute(node.attributes[i].name, node.attributes[i].value);
+              }
+              s.textContent = node.textContent;
+              frag.appendChild(s);
+            } else {
+              frag.appendChild(node);
+            }
+          }
+          target.appendChild(frag);
+        }
+        try {
+          var cfg = globalThis.__RIN_CLIENT_CONFIG__ || {};
+          inject(document.head, cfg['custom.head']);
+          if (cfg['custom.footer']) {
+            globalThis.__RIN_CUSTOM_FOOTER__ = cfg['custom.footer'];
+          }
+        } catch(e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script data-cfasync="false">
+      (function() {
+        function inject(target, html) {
+          if (!html || typeof html !== 'string') return;
+          var frag = document.createDocumentFragment();
+          var wrapper = document.createElement('div');
+          wrapper.innerHTML = html;
+          while (wrapper.firstChild) {
+            var node = wrapper.firstChild;
+            wrapper.removeChild(node);
+            if (node.nodeName === 'SCRIPT') {
+              var s = document.createElement('script');
+              for (var i = 0; i < node.attributes.length; i++) {
+                s.setAttribute(node.attributes[i].name, node.attributes[i].value);
+              }
+              s.textContent = node.textContent;
+              frag.appendChild(s);
+            } else {
+              frag.appendChild(node);
+            }
+          }
+          target.appendChild(frag);
+        }
+        try {
+          inject(document.body, globalThis.__RIN_CUSTOM_FOOTER__);
+          delete globalThis.__RIN_CUSTOM_FOOTER__;
+        } catch(e) {}
+      })();
+    </script>
   </body>
 </html>

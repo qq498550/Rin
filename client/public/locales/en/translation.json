@@ -289,6 +289,17 @@
       "desc": "Set the footer content of the site (HTML)",
       "title": "Footer"
     },
+    "custom_code": {
+      "title": "Custom Code",
+      "head": {
+        "title": "Custom Head Code",
+        "desc": "Enter HTML/JavaScript code to be injected into the <head> tag of your front-end site. Use this for analytics tracking scripts like Umami or Google Analytics."
+      },
+      "footer": {
+        "title": "Custom Footer Code",
+        "desc": "Enter HTML/JavaScript code to be injected before the </body> tag of your front-end site. Use this for footer widgets, chat plugins, etc."
+      }
+    },
     "webhook": {
       "title": "Webhook",
       "url": {

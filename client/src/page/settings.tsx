@@ -549,6 +549,26 @@ export function Settings() {
             }}
           />
 
+          <ItemTitle title={t("settings.custom_code.title")} />
+          <ItemInput
+            title={t("settings.custom_code.head.title")}
+            description={t("settings.custom_code.head.desc")}
+            configKeyTitle="&lt;head&gt; Code"
+            value={String(clientConfig.get("custom.head") ?? "")}
+            onChange={(value) => {
+              setConfigValue("client", "custom.head", value);
+            }}
+          />
+          <ItemInput
+            title={t("settings.custom_code.footer.title")}
+            description={t("settings.custom_code.footer.desc")}
+            configKeyTitle="&lt;/body&gt; Code"
+            value={String(clientConfig.get("custom.footer") ?? "")}
+            onChange={(value) => {
+              setConfigValue("client", "custom.footer", value);
+            }}
+          />
+
           <ItemTitle title={t("settings.webhook.title")} />
           <ItemInput
             title={t("settings.webhook.url.title")}

@@ -289,6 +289,17 @@
       "desc": "設定顯示於網站底部的內容（HTML）",
       "title": "網站底部內容"
     },
+    "custom_code": {
+      "title": "自訂程式碼",
+      "head": {
+        "title": "自訂頭部程式碼",
+        "desc": "在此輸入 HTML/JavaScript 程式碼，將自動注入到前台網站 <head> 標籤內。適用於 Umami、Google Analytics 等第三方統計追蹤程式碼。"
+      },
+      "footer": {
+        "title": "自訂尾部程式碼",
+        "desc": "在此輸入 HTML/JavaScript 程式碼，將自動注入到前台網站 </body> 標籤之前。適用於頁尾掛件、聊天插件等。"
+      }
+    },
     "webhook": {
       "title": "Webhook",
       "url": {

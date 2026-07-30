@@ -289,6 +289,17 @@
       "desc": "设置显示于站点底部的内容（HTML）",
       "title": "站点底部内容"
     },
+    "custom_code": {
+      "title": "自定义代码",
+      "head": {
+        "title": "自定义头部代码",
+        "desc": "在此输入 HTML/JavaScript 代码，将自动注入到前台网站 <head> 标签内。适用于 Umami、Google Analytics 等第三方统计跟踪代码。"
+      },
+      "footer": {
+        "title": "自定义尾部代码",
+        "desc": "在此输入 HTML/JavaScript 代码，将自动注入到前台网站 </body> 标签之前。适用于页脚挂件、聊天插件等。"
+      }
+    },
     "webhook": {
       "title": "Webhook",
       "url": {

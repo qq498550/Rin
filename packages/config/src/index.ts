@@ -22,6 +22,8 @@ export const CLIENT_CONFIG_DEFAULTS = new Map(
     "background.image": "",
     "background.imageOpacity": 0.5,
     "background.gradient": "",
+    "custom.head": "",
+    "custom.footer": "",
   }),
 );
 
