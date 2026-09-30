@@ -585,7 +585,9 @@
       "preview_alt": "圖片預覽",
       "url_placeholder": "填寫圖片 URL，或上傳一張圖片"
     },
-    "title": "上傳"
+    "title": "上傳",
+    "batch_progress$done$total": "上傳中 {{done}}/{{total}}",
+    "batch_failed$names": "以下圖片上傳失敗：{{names}}"
   },
   "uploading": "上傳中",
   "url": "網站 URL",

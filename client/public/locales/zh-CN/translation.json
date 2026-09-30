@@ -585,7 +585,9 @@
       "preview_alt": "图片预览",
       "url_placeholder": "填写图片 URL，或上传一张图片"
     },
-    "title": "上传"
+    "title": "上传",
+    "batch_progress$done$total": "上传中 {{done}}/{{total}}",
+    "batch_failed$names": "以下图片上传失败：{{names}}"
   },
   "uploading": "上传中",
   "url": "站点 URL",

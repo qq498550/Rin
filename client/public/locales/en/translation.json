@@ -585,7 +585,9 @@
       "preview_alt": "Image preview",
       "url_placeholder": "Enter an image URL, or upload an image"
     },
-    "title": "Upload"
+    "title": "Upload",
+    "batch_progress$done$total": "Uploading {{done}}/{{total}}",
+    "batch_failed$names": "Failed to upload the following images: {{names}}"
   },
   "uploading": "Uploading...",
   "url": "Site URL",

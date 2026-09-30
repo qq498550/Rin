@@ -576,7 +576,9 @@
       "preview_alt": "画像プレビュー",
       "url_placeholder": "画像 URL を入力するか、画像をアップロードしてください"
     },
-    "title": "アップロード"
+    "title": "アップロード",
+    "batch_progress$done$total": "アップロード中 {{done}}/{{total}}",
+    "batch_failed$names": "以下の画像のアップロードに失敗しました：{{names}}"
   },
   "uploading": "アップロード中",
   "url": "サイトURL",

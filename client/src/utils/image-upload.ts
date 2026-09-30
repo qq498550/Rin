@@ -240,6 +240,82 @@ export async function uploadImageWithCompression(
   };
 }
 
+// Batch upload multiple images with concurrency control.
+// Results keep the input order; invalid files are marked as "skipped" instead of aborting the batch.
+export type BatchUploadItemStatus = "success" | "skipped" | "failed";
+
+export type BatchUploadItemResult = {
+  file: File;
+  index: number;
+  status: BatchUploadItemStatus;
+  error?: string;
+} & Partial<UploadedImageResult>;
+
+export type BatchUploadProgress = {
+  total: number;
+  completed: number;
+  failed: number;
+};
+
+export async function uploadImagesBatch(
+  files: File[],
+  options: {
+    variant?: ImageVariantKey;
+    maxFileSize?: number;
+    concurrency?: number;
+    onProgress?: (progress: BatchUploadProgress) => void;
+  } = {},
+): Promise<BatchUploadItemResult[]> {
+  const {
+    variant = "content",
+    maxFileSize = DEFAULT_IMAGE_MAX_FILE_SIZE,
+    concurrency = 3,
+    onProgress,
+  } = options;
+
+  const results: BatchUploadItemResult[] = new Array(files.length);
+  let completed = 0;
+  let failed = 0;
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < files.length) {
+      const index = nextIndex++;
+      const file = files[index];
+      let result: BatchUploadItemResult;
+
+      if (!isImageFile(file)) {
+        result = { file, index, status: "skipped", error: "unsupported file type" };
+      } else if (file.size > maxFileSize) {
+        result = { file, index, status: "skipped", error: "file too large" };
+      } else {
+        try {
+          const uploaded = await uploadImageWithCompression(file, { variant });
+          result = { file, index, status: "success", ...uploaded };
+        } catch (error) {
+          result = {
+            file,
+            index,
+            status: "failed",
+            error: error instanceof Error ? error.message : "upload failed",
+          };
+        }
+      }
+
+      if (result.status !== "success") {
+        failed += 1;
+      }
+      results[index] = result;
+      completed += 1;
+      onProgress?.({ total: files.length, completed, failed });
+    }
+  }
+
+  const workerCount = Math.max(1, Math.min(concurrency, files.length));
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  return results;
+}
+
 // Legacy upload (for backward compatibility - uploads original without compression)
 export async function uploadImageFile(file: File): Promise<UploadedImageResult> {
   const [uploadResult, metadataResult] = await Promise.allSettled([
